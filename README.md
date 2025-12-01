@@ -480,6 +480,50 @@ CaseFile create_case_2()
     return c;
 }
 
+CaseFile create_case_3()
+{
+    CaseFile c;
+    c.id = 3;
+    c.title = "The Vanishing Science Project";
+    c.introText =
+        "A popular science project titled 'Smart Irrigation System' disappeared from the exhibition hall.\n"
+        "Only three students stayed late to finish last-minute work.\n";
+    c.correctCulpritId = 3;
+
+    c.suspects = {
+        {1, "Arjun", "Computer wizard, often gets absorbed in his own work."},
+        {2, "Bhavya", "Electronics enthusiast, known for burning components while experimenting."},
+        {3, "Tina", "Top scorer, very competitive and hates losing."}
+    };
+
+    c.evidenceList = {
+        {1, "Power Room Log",
+         "Log shows the main power was turned off manually at 20:40."},
+        {2, "CCTV Snapshot",
+         "CCTV shows Tina leaving the hall at 20:42 carrying a large bag."},
+        {3, "Burnt Table Mark",
+         "Singe marks from a soldering iron are found on Arjun's desk."},
+        {4, "Spare Key Record",
+         "Cabinet spare key was checked out by someone whose initials are 'T'."}
+    };
+
+    c.statements = {
+        {1, 1, "I didn't leave my table. I was fixing my sensor module till 21:00."},
+        {2, 2, "Yes, the power went out, but I didn't touch any switches."},
+        {3, 3, "I finished early and left around 20:30."},
+        {4, 3, "Why would I take someone's project? I had no way to open the cabinet."}
+    };
+
+    c.contradictions = {
+        {1, 3, 2, "CCTV shows Tina leaving at 20:42, not 20:30 as she claimed."},
+        {2, 4, 4, "Spare key record with initial 'T' contradicts Tina saying she had no way to open the cabinet."},
+        {3, 1, 3, "Burn marks on Arjun's table support his story that he stayed at his desk working."}
+    };
+
+    return c;
+}
+
+
 void play_case(CaseFile &c)
 {
     CaseProgress progress;
@@ -572,6 +616,7 @@ int main()
     vector<CaseFile> cases;
     cases.push_back(create_case_1());
     cases.push_back(create_case_2());
+    cases.push_back(create_case_3());
 
     write_line("Game starting...");
     main_menu(cases);
@@ -579,3 +624,4 @@ int main()
     write_line("Thank you for playing Logic Detective.");
     return 0;
 }
+
